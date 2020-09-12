@@ -235,6 +235,34 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
     Status_Check
     Print "Done with $1 Installation."
     ;;
+  payment)
+    Print "Installing python3..."
+    yum install python36 gcc python3-devel -y
+    Status_Check
+    Print "Adding Application user..."
+    useradd roboshop
+    Status_Check
+    mkdir -p /home/roboshop/$1
+    cd /home/roboshop/$1
+    Print "Downloading $1 Application..."
+    curl -L -s -o /tmp/payment.zip "https://dev.azure.com/DevOps-Batches/ce99914a-0f7d-4c46-9ccc-e4d025115ea9/_apis/git/repositories/02fde8af-1af6-44f3-8bc7-a47c74e95311/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
+    Status_Check
+    Print "Extracting $1 Application..."
+    unzip /tmp/payment.zip
+    Status_Check
+    chmod roboshop:roboshop /home/roboshop/ -R
+    Print "Installing dependencies..."
+    pip3 install -r requirements.txt
+    Status_Check
+    Print "Setting up Application configuration..."
+    mv /home/roboshop/payment/systemd.service /etc/systemd/system/payment.service
+    Print "Starting $1 Application..."
+    systemctl daemon-reload
+    systemctl enable payment
+    systemctl start payment
+    Status_Check
+    Print "Done with $1 Installation."
+    ;;
   *)
     echo -e "\e[31mPlease mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue\e[0m"
 esac
