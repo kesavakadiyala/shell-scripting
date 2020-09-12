@@ -212,7 +212,29 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
     systemctl enable shipping
     Print "Done with $1 Installation."
     ;;
-
+  rabbitmq)
+    Print "Installing Erlang dependency for rabbitmq..."
+    yum install https://packages.erlang-solutions.com/erlang/rpm/centos/7/x86_64/esl-erlang_22.2.1-1~centos~7_amd64.rpm -y
+    Status_Check
+    Print "Setting up repository for rabbitmq..."
+    curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash
+    Status_Check
+    Print "Installing $1..."
+    yum install rabbitmq-server -y
+    Status_Check
+    Print "Starting $1 server..."
+    systemctl enable rabbitmq-server
+    systemctl start rabbitmq-server
+    Status_Check
+    Print "Creating Application user..."
+    rabbitmqctl add_user roboshop roboshop123
+    Status_Check
+    Print "Setting up permissions for application user..."
+    rabbitmqctl set_user_tags roboshop administrator
+    rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+    Status_Check
+    Print "Done with $1 Installation."
+    ;;
   *)
     echo -e "\e[31mPlease mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue\e[0m"
 esac
