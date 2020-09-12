@@ -5,10 +5,10 @@ USER_ID=$(id -u)
 
 case $USER_ID in
   0)
-    echo "\e[33Starting Installation\e[0m"
+    echo -e "\e[33mStarting Installation\e[0m"
     ;;
   *)
-    echo "\e[31mYou should be a root user for running $0 script.\e[0m"
+    echo -e "\e[31mYou should be a root user for running $0 script.\e[0m"
     exit
     ;;
 esac
@@ -18,17 +18,17 @@ esac
 Status_Check(){
   case $? in
     0)
-      echo "\e[32m>> Success\e[0m"
+      echo -e "\e[32m>> Success\e[0m"
       ;;
     *)
-      echo "\e[31m>> Failed\e[0m"
+      echo -e "\e[31m>> Failed\e[0m"
       exit 1;
       ;;
   esac
 }
 
 Print(){
-  echo "\e[33m>> $1\e[0m"
+  echo -e "\e[33m>> $1\e[0m"
 }
 
 # Main Program
@@ -55,5 +55,5 @@ case $INPUT in
     Status_Check
     ;;
   *)
-    echo "\e[31mPlease mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue\e[0m"
+    echo -e "\e[31mPlease mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue\e[0m"
 esac
