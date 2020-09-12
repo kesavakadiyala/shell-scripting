@@ -75,17 +75,17 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
     Status_Check
     cd /tmp
     Print "Extracting MongoDB Application..."
-    unzip -o mongodb.zip
+    unzip -o mongodb.zip >> output.log
     Status_Check
     Print "Starting MongoDB..."
     systemctl enable mongod >> output.log
     systemctl restart mongod
     Status_Check
     Print "Adding Catalogue schema to mongo..."
-    mongo < catalogue.js
+    mongo < catalogue.js >> output.log
     Status_Check
     Print "Adding User schema to mongo..."
-    mongo < users.js
+    mongo < users.js >> output.log
     Status_Check
     Print "Done with MongoDB Installation."
     ;;
