@@ -58,7 +58,7 @@ Setup_Nojejs(){
   Status_Check
   chown roboshop:roboshop /home/roboshop -R
   Print "Setting up $1 services..."
-  mv /home/roboshop/catalogue/systemd.service /etc/systemd/system/$1.service
+  mv /home/roboshop/$1/systemd.service /etc/systemd/system/$1.service
   sed -i -e "s/MONGO_ENDPOINT/mongodb.${DNS_DOMAIN_NAME}/" /etc/systemd/system/$1.service
   Status_Check
   Print "daemon-reloading..."
