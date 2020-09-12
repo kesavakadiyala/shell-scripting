@@ -79,18 +79,20 @@ case $INPUT in
     yum install nginx -y >> /root/shell-scripting/output.log
     Status_Check
     Print "Downloading Frontend Application..."
-    curl -s -L -o /tmp/frontend.zip "https://dev.azure.com/DevOps-Batches/ce99914a-0f7d-4c46-9ccc-e4d025115ea9/_apis/git/repositories/db389ddc-b576-4fd9-be14-b373d943d6ee/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
+    curl -s -L -o /tmp/frontend.zip "https://codeload.github.com/kesavakadiyala/rs-frontend/zip/master?token=AG4AK7AHYJHQ6O7FLCGMN7K7LTGM2"
     Status_Check
     cd /usr/share/nginx/html
     rm -rf *
     Print "Extracting Frontend Application..."
     unzip -o /tmp/frontend.zip >> /root/shell-scripting/output.log
     Status_Check
-    mv static/* .
-    rm -rf static README.md
+    mv rs-frontend-master/static/* .
+    mv rs-frontend-master/*.conf .
+    rm -rf rs-frontend-master/
     Print "Setting up Application configuration..."
     mv localhost.conf /etc/nginx/nginx.conf
     sed -i -e "s/CATALOGUE_ENDPOINT/catalogue.${DNS_DOMAIN_NAME}/" /etc/nginx/nginx.conf
+    Status_Check
     Print "Starting nginx..."
     systemctl enable nginx >> output.log
     systemctl restart nginx
