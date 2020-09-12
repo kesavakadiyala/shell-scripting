@@ -5,7 +5,7 @@ USER_ID=$(id -u)
 
 case $USER_ID in
   0)
-    echo -e "\e[33mStarting Installation\e[0m"
+    echo -e "\e[33mStarting $INPUT Installation\e[0m"
     ;;
   *)
     echo -e "\e[31mYou should be a root user for running $0 script.\e[0m"
@@ -39,7 +39,7 @@ Setup_Nojejs(){
   case $? in
     1)
       Print "Adding Application user..."
-      user add roboshop
+      useradd roboshop
       Status_Check
       ;;
     *)
@@ -94,8 +94,7 @@ case $INPUT in
     ;;
 
   mongodb)
-    Print "Setting 4u
-    p MongoDB Repo..."
+    Print "Setting up MongoDB Repo..."
     echo '[mongodb-org-4.2]
 name=MongoDB Repository
 baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.2/x86_64/
