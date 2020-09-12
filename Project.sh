@@ -2,6 +2,7 @@
 
 INPUT=$1
 USER_ID=$(id -u)
+DNS_DOMAIN_NAME=kesavakadiyala.tech
 
 case $USER_ID in
   0)
@@ -51,19 +52,21 @@ Setup_Nojejs(){
   mkdir catalogue
   cd catalogue
   Print "Extracting $1 Application..."
-  unzip -o /tmp/catalogue.zip >> output.log
+  unzip -o /tmp/$1.zip >> output.log
   Status_Check
   Print "Installing Nodejs App Dependencies..."
-  npm --unsafe-perm install
+  npm --unsafe-perm install  >> output.log
   Status_Check
   chown roboshop:roboshop /home/roboshop -R
-  mv /home/roboshop/catalogue/systemd.service /etc/systemd/system/catalogue.service
+  Print "Setting up $1 services..."
+  mv /home/roboshop/catalogue/systemd.service /etc/systemd/system/$1.service
+  sed -i -e "s/MONGO_ENDPOINT/mongodb.${DNS_DOMAIN_NAME}/" /etc/systemd/system/$1.service
   Print "daemon-reloading..."
   systemctl daemon-reload
   Status_Check
   Print "Starting $1 Application..."
-  systemctl enable catalogue >> output.log
-  systemctl start catalogue
+  systemctl enable $1 >> output.log
+  systemctl start $1
   Status_Check
   Print "Done with $1 Application Installation..."
 }
@@ -85,7 +88,9 @@ case $INPUT in
     Status_Check
     mv static/* .
     rm -rf static README.md
+    Print "Setting up Application configuration..."
     mv localhost.conf /etc/nginx/nginx.conf
+    sed -i -e "s/CATALOGUE_ENDPOINT/catalogue.${DNS_DOMAIN_NAME}/" /etc/nginx/nginx.conf
     Print "Starting nginx..."
     systemctl enable nginx >> output.log
     systemctl restart nginx
