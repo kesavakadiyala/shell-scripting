@@ -5,7 +5,7 @@ USER_ID=$(id -u)
 
 case $USER_ID in
   0)
-    echo "Starting Installation"
+    echo "\e[33Starting Installation\e[0m"
     ;;
   *)
     echo "\e[31mYou should be a root user for running $0 script.\e[0m"
@@ -55,5 +55,5 @@ case $INPUT in
     Status_Check
     ;;
   *)
-    echo "Please mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue"
+    echo "\e[31mPlease mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue\e[0m"
 esac
