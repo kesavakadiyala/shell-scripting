@@ -36,7 +36,7 @@ Setup_Nojejs(){
   Print "Installing Nodejs..."
   yum install nodejs make gcc-c++ -y >> output.log
   Status_Check
-  id roboshop
+  id roboshop >> output.log
   case $? in
     1)
       Print "Adding Application user..."
@@ -48,10 +48,9 @@ Setup_Nojejs(){
   Print "Downloading $1 Application..."
   curl -s -L -o /tmp/$1.zip "$2"
   Status_Check
-  cd /home/roboshop
-  mkdir catalogue
-  cd catalogue
   Print "Extracting $1 Application..."
+  mkdir -p /home/roboshop/$1
+  cd /home/roboshop/$1
   unzip -o /tmp/$1.zip >> output.log
   Status_Check
   Print "Installing Nodejs App Dependencies..."
@@ -61,6 +60,7 @@ Setup_Nojejs(){
   Print "Setting up $1 services..."
   mv /home/roboshop/catalogue/systemd.service /etc/systemd/system/$1.service
   sed -i -e "s/MONGO_ENDPOINT/mongodb.${DNS_DOMAIN_NAME}/" /etc/systemd/system/$1.service
+  Status_Check
   Print "daemon-reloading..."
   systemctl daemon-reload
   Status_Check
@@ -84,7 +84,7 @@ case $INPUT in
     cd /usr/share/nginx/html
     rm -rf *
     Print "Extracting Frontend Application..."
-    unzip - o /tmp/frontend.zip >> /root/shell-scripting/output.log
+    unzip -o /tmp/frontend.zip >> /root/shell-scripting/output.log
     Status_Check
     mv static/* .
     rm -rf static README.md
