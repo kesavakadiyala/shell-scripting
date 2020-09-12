@@ -68,7 +68,8 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
     Print "Installing Mongodb..."
     yum install -y mongodb-org >> output.log
     Status_Check
-    sed -i "s/127.0.0.1/0.0.0.0" /etc/mongod.conf
+    sed -i -e "s/127.0.0.1/0.0.0.0" /etc/mongod.conf
+    Status_Check
     Print "Downloading MongoDB Application..."
     curl -s -L -o /tmp/mongodb.zip "https://dev.azure.com/DevOps-Batches/ce99914a-0f7d-4c46-9ccc-e4d025115ea9/_apis/git/repositories/e9218aed-a297-4945-9ddc-94156bd81427/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
     Status_Check
@@ -76,15 +77,15 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
     Print "Extracting MongoDB Application..."
     unzip -o mongodb.zip
     Status_Check
+    Print "Starting MongoDB..."
+    systemctl enable mongod >> output.log
+    systemctl restart mongod
+    Status_Check
     Print "Adding Catalogue schema to mongo..."
     mongo < catalogue.js
     Status_Check
     Print "Adding User schema to mongo..."
     mongo < users.js
-    Status_Check
-    Print "Starting MongoDB..."
-    systemctl enable mongod >> output.log
-    systemctl restart mongod
     Status_Check
     Print "Done with MongoDB Installation."
     ;;
