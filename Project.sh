@@ -1,5 +1,6 @@
 #!bin/bash
 
+INPUT=$1
 USER_ID=$(id -u)
 
 case $USER_ID in
@@ -32,7 +33,7 @@ Print(){
 
 # Main Program
 
-case $1 in
+case $INPUT in
   frontend)
     Print "Installing Nginx..."
     yum install nginx -y >> /root/shell-scripting/output.log
@@ -53,4 +54,6 @@ case $1 in
     systemctl restart nginx
     Status_Check
     ;;
+  *)
+    echo "Please mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue"
 esac
