@@ -88,8 +88,8 @@ case $INPUT in
     Status_Check
     mv static/* .
     rm -rf static README.md
-    sed -i "s/#/ /" localhost.conf
-    sed -i -e "s/localhost:7002/catalog.${DNS_DOMAIN_NAME}:8000/" localhost.conf
+#    sed -i "s/#//" localhost.conf
+#    sed -i -e "s/localhost:7002/catalog.${DNS_DOMAIN_NAME}:8000/" localhost.conf
     Print "Setting up Application configuration..."
     mv localhost.conf /etc/nginx/nginx.conf
     sed -i -e "s/CATALOGUE_ENDPOINT/catalogue.${DNS_DOMAIN_NAME}/" /etc/nginx/nginx.conf
