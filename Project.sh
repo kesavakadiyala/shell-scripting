@@ -132,7 +132,7 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
     Print "Adding User schema to mongo..."
     mongo < users.js >> output.log
     Status_Check
-    Print "Done with MongoDB Installation."
+    Print "Done with $1 Installation."
     ;;
   catalogue)
     Setup_Nojejs "catalogue" "https://dev.azure.com/DevOps-Batches/ce99914a-0f7d-4c46-9ccc-e4d025115ea9/_apis/git/repositories/558568c8-174a-4076-af6c-51bf129e93bb/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
@@ -181,6 +181,38 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
     Print "Default root password:"
     grep temp /var/log/mysqld.log
     ;;
+  shipping)
+    Print "Installing maven..."
+    yum install maven -y
+    Status_Check
+    Print "Adding Application user..."
+    useradd roboshop
+    Status_Check
+    mkdir -p /home/roboshop/$1
+    cd /home/roboshop/$1
+    Print "Downloading Shipping Application..."
+    curl -s -L -o /tmp/shipping.zip "https://dev.azure.com/DevOps-Batches/ce99914a-0f7d-4c46-9ccc-e4d025115ea9/_apis/git/repositories/e13afea5-9e0d-4698-b2f9-ed853c78ccc7/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
+    Status_Check
+    Print "Extracting shipping Application..."
+    unzip -o /tmp/shipping.zip
+    Status_Check
+    Print "Building Application..."
+    mvn clean package
+    Status_Check
+    Print "Moving Jar to Project location..."
+    mv target/*dependencies.jar shipping.jar
+    Status_Check
+    chmod roboshop:roboshop /home/roboshop/ -R
+    Print "Setting up Application configuration..."
+    cp /home/roboshop/shipping/systemd.service /etc/systemd/system/shipping.service
+    Status_Check
+    Print "Starting $1 Application..."
+    systemctl daemon-reload
+    systemctl start shipping
+    systemctl enable shipping
+    Print "Done with $1 Installation."
+    ;;
+
   *)
     echo -e "\e[31mPlease mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue\e[0m"
 esac
