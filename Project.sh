@@ -158,6 +158,29 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
   cart)
     Setup_Nojejs "cart" "https://dev.azure.com/DevOps-Batches/ce99914a-0f7d-4c46-9ccc-e4d025115ea9/_apis/git/repositories/ac4e5cc0-c297-4230-956c-ba8ebb00ce2d/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
     ;;
+  mysql)
+    Print "Downloading mysql..."
+    curl -L -o /tmp/mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar
+    Status_Check
+    cd /tmp
+    Print "Extracting mysql..."
+    tar -xf mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar
+    Status_Check
+    Print "Removing Mariadb..."
+    yum remove mariadb-libs -y
+    Status_Check
+    Print "Installing mysql..."
+    yum install mysql-community-client-5.7.28-1.el7.x86_64.rpm \
+              mysql-community-common-5.7.28-1.el7.x86_64.rpm \
+              mysql-community-libs-5.7.28-1.el7.x86_64.rpm \
+              mysql-community-server-5.7.28-1.el7.x86_64.rpm -y
+    Print "Starting mysql..."
+    systemctl enable mysqld
+    systemctl start mysqld
+    Status_Check
+    Print "Default root password:"
+    grep temp /var/log/mysqld.log
+    ;;
   *)
     echo -e "\e[31mPlease mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue\e[0m"
 esac
