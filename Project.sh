@@ -53,6 +53,7 @@ case $INPUT in
     systemctl enable nginx >> output.log
     systemctl restart nginx
     Status_Check
+    Print "Done with Frontend Installation."
     ;;
 
   mongodb)
@@ -65,9 +66,27 @@ enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mongodb.repo
     Status_Check
     Print "Installing Mongodb..."
-    yum install -y mongodb-org
+    yum install -y mongodb-org >> output.log
     Status_Check
-
+    sed -i "s/127.0.0.1/0.0.0.0" /etc/mongod.conf
+    Print "Downloading MongoDB Application..."
+    curl -s -L -o /tmp/mongodb.zip "https://dev.azure.com/DevOps-Batches/ce99914a-0f7d-4c46-9ccc-e4d025115ea9/_apis/git/repositories/e9218aed-a297-4945-9ddc-94156bd81427/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
+    Status_Check
+    cd /tmp
+    Print "Extracting MongoDB Application..."
+    unzip -o mongodb.zip
+    Status_Check
+    Print "Adding Catalogue schema to mongo..."
+    mongo < catalogue.js
+    Status_Check
+    Print "Adding User schema to mongo..."
+    mongo < users.js
+    Status_Check
+    Print "Starting MongoDB..."
+    systemctl enable mongod >> output.log
+    systemctl restart mongod
+    Status_Check
+    Print "Done with MongoDB Installation."
     ;;
   *)
     echo -e "\e[31mPlease mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue\e[0m"
