@@ -44,15 +44,30 @@ case $INPUT in
     cd /usr/share/nginx/html
     rm -rf *
     Print "Extracting Frontend Application..."
-    unzip /tmp/frontend.zip >> /root/shell-scripting/output.log
+    unzip - o /tmp/frontend.zip >> /root/shell-scripting/output.log
     Status_Check
     mv static/* .
     rm -rf static README.md
     mv localhost.conf /etc/nginx/nginx.conf
     Print "Starting nginx..."
-    systemctl enable nginx
+    systemctl enable nginx >> output.log
     systemctl restart nginx
     Status_Check
+    ;;
+
+  mongodb)
+    Print "Settingup MongoDB Repo..."
+    echo '[mongodb-org-4.2]
+        name=MongoDB Repository
+        baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.2/x86_64/
+        gpgcheck=1
+        enabled=1
+        gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mongodb.repo
+    Status_Check
+    Print "Installing Mongodb..."
+    yum install -y mongodb-org
+    Status_Check
+
     ;;
   *)
     echo -e "\e[31mPlease mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue\e[0m"
