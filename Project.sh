@@ -140,7 +140,20 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
   user)
     Setup_Nojejs "user" "https://dev.azure.com/DevOps-Batches/ce99914a-0f7d-4c46-9ccc-e4d025115ea9/_apis/git/repositories/e911c2cd-340f-4dc6-a688-5368e654397c/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
     ;;
-
+  redis)
+    Print "Installing Redis..."
+    yum install epel-release yum-utils -y
+    Status_Check
+    yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
+    Status_Check
+    yum-config-manager --enable remi
+    Status_Check
+    yum install redis -y
+    Status_Check
+    Print "Starting Redis Server..."
+    systemctl enable redis
+    systemctl start redis
+    Status_Check
   *)
     echo -e "\e[31mPlease mention proper input for $0 script. \nUsage: sh Project.sh frontend|mongodb|catalogue\e[0m"
 esac
