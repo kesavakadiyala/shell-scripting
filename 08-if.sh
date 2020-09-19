@@ -50,3 +50,5 @@ if [ $a -gt 10 ]; then
 else
   echo a is less than or equal to 10
 fi
+
+# https://linux.die.net/man/1/bash (You can refer to this site for more operators)
