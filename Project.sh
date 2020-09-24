@@ -34,11 +34,10 @@ Print(){
 
 Create_AppUser(){
   id roboshop >> output.log
-  if [$? -ne 0]; then
+  if [ $? -ne 0 ]; then
       Print "Adding Application user..."
       useradd roboshop
       Status_Check
-      ;;
   fi
 }
 
