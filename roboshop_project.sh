@@ -86,11 +86,11 @@ OS=$(cat /etc/os-release  | grep -w ID= |awk -F = '{print $2}'|xargs)
 VERSION=$(cat /etc/os-release  | grep -w VERSION_ID | awk -F = '{print $2}' |xargs)
 
 if [ "$OS" == "centos" -a $VERSION -eq 7 ]; then
-  echo "\e[32mOS Checks - PASSED\e[0m"
+  echo -e "\e[32mOS Checks - PASSED\e[0m"
 else
-  echo "\e[31mOS Checks - FAILED\e[0m"
-  echo "\e[31mUnsupported OS!!!\e[0m"
-  echo "\e[33mSupports only CentOS 7\e[0m"
+  echo -e "\e[31mOS Checks - FAILED\e[0m"
+  echo -e "\e[31mUnsupported OS!!!\e[0m"
+  echo -e "\e[33mSupports only CentOS 7\e[0m"
   exit 10
 fi
 
