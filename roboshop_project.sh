@@ -78,7 +78,7 @@ Setup_Nojejs(){
 ## Check whether it is a Linux Box
 UNAME=$(uname)
 if [ "${UNAME}" != "Linux" ]; then
-  echo "\e[31mUnsupported OS!!\e[0m"
+  echo -e "\e[31mUnsupported OS!!\e[0m"
   exit 10
 fi
 
