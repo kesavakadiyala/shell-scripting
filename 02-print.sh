@@ -2,7 +2,7 @@
 
 echo Welcome viewer
 
-exho -e "Welcome Viewer \n\t Thanks for Viewing"
+echo -e "Welcome Viewer \n\t Thanks for Viewing"
 
 #Syntax for printing color message: echo -e "\e[COL-CODEmMessage\e[0m"
 # echo - print message
