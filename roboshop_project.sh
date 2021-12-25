@@ -55,7 +55,7 @@ Setup_Nojejs(){
   unzip -o /tmp/$1.zip >> output.log
   Status_Check
   Print "Installing Nodejs App Dependencies..."
-  npm --unsafe-perm install  >> output.log
+  npm install  >> output.log
   Status_Check
   chown roboshop:roboshop /home/roboshop -R
   Print "Setting up $1 services..."
