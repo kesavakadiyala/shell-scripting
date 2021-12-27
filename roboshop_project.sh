@@ -50,7 +50,7 @@ Setup_Nojejs(){
   curl -s -L -o /tmp/$1.zip "$2"
   Status_Check
   Print "Extracting $1 Application..."
-  #mkdir -p /home/roboshop/$1
+  mkdir -p /home/roboshop/$1
   cd /home/roboshop/
   unzip -o /tmp/$1.zip >> output.log
   Status_Check
