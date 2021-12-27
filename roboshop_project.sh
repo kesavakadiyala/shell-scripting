@@ -54,6 +54,7 @@ Setup_Nojejs(){
   cd /home/roboshop/$1
   unzip -o /tmp/$1.zip >> output.log
   Status_Check
+  mv rs-$1-main/* .
   Print "Installing Nodejs App Dependencies..."
   npm install  >> output.log
   Status_Check
@@ -169,7 +170,7 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
   ;;
 
   catalogue)
-    Setup_Nojejs "catalogue" "https://dev.azure.com/KesavaKadiyala/a5039393-a1c4-4089-97e8-8f43f6af7cd5/_apis/git/repositories/af3c1a7a-1ef8-4830-aaeb-60d137c9dd70/items?path=/&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
+    Setup_Nojejs "catalogue" "https://github.com/cicd-project/rs-catalogue/archive/main.zip"
   ;;
 
   user)
