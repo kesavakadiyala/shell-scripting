@@ -273,7 +273,7 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
     Print "Moving Jar to Project location..."
     mv target/shipping-1.0.jar shipping.jar
     Status_Check
-    chmod roboshop:roboshop /home/roboshop/ -R
+    chown roboshop:roboshop /home/roboshop/ -R
     Print "Setting up Application configuration..."
     cp /home/roboshop/shipping/systemd.service /etc/systemd/system/shipping.service
     sed -i -e "s/CARTENDPOINT/cart.${DNS_DOMAIN_NAME}/" /etc/systemd/system/shipping.service
