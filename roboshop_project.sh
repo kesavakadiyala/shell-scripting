@@ -192,6 +192,9 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
     if [ -e /etc/redis.conf ]; then
       sed -i -e '/^bind 127.0.0.1/ c bind 0.0.0.0' /etc/redis.conf
     fi
+    if [ -e /etc/redis/redis.conf ]; then
+      sed -i -e '/^bind 127.0.0.1 -::1/ c bind 0.0.0.0 -::1' /etc/redis.conf
+    fi
     Print "Starting Redis Server..."
     systemctl enable redis
     systemctl start redis
