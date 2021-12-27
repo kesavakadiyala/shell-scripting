@@ -288,13 +288,19 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
 
   rabbitmq)
     Print "Installing Erlang dependency for rabbitmq..."
+    sudo yum -y install epel-release >> output.log
+    Status_Check
+    cd ~ && wget https://packages.erlang-solutions.com/erlang/rpm/centos/7/x86_64/esl-erlang_24.0.2-1~centos~7_amd64.rpm >> output.log
+    Status_Check
+    sudo yum -y install esl-erlang*.rpm >> output.log
+    Status_Check
     yum install https://packages.erlang-solutions.com/erlang/rpm/centos/7/x86_64/esl-erlang_22.2.1-1~centos~7_amd64.rpm -y >> output.log
     Status_Check
     Print "Setting up repository for rabbitmq..."
-    curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash
+    wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.19/rabbitmq-server-3.8.19-1.el7.noarch.rpm >> output.log
     Status_Check
     Print "Installing $1..."
-    yum install rabbitmq-server -y >> output.log
+    sudo yum -y install rabbitmq-server*.rpm >> output.log
     Status_Check
     Print "Starting $1 server..."
     systemctl enable rabbitmq-server
