@@ -97,8 +97,11 @@ fi
 case $INPUT in
   frontend)
     Print "Installing Nginx..."
+    soft=`yum list nginx | grep nginx | awk '{print $1}'`
+    if [ $soft != 'nginx.x86_64' ]; then
     yum install nginx -y >> output.log
     Status_Check
+    fi
     Print "Downloading Frontend Application..."
     curl -s -L -o /tmp/frontend.zip "https://github.com/cicd-project/rs-frontend/archive/main.zip"
     Status_Check
@@ -111,7 +114,7 @@ case $INPUT in
     mv static/* .
     rm -rf rs-frontend-main static README.md
     Print "Setting up Application configuration..."
-    mv localhost.conf /etc/nginx/nginx.conf
+    mv template.conf /etc/nginx/nginx.conf
     export CATALOGUE=catalogue.${DNS_DOMAIN_NAME}
     export CART=cart.${DNS_DOMAIN_NAME}
     export USER=user.${DNS_DOMAIN_NAME}
