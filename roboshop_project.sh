@@ -239,11 +239,12 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
       Status_Check
     fi
     Print "Downloading Schema..."
-    curl -s -L -o /tmp/mysql.zip "https://dev.azure.com/DevOps-Batches/ce99914a-0f7d-4c46-9ccc-e4d025115ea9/_apis/git/repositories/af9ec0c1-9056-4c0e-8ea3-76a83aa36324/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
+    curl -s -L -o /tmp/mysql.zip "https://github.com/cicd-project/rs-mysql/archive/main.zip"
     Status_Check
     Print "Extracting Schema..."
     cd /tmp
     unzip -o mysql.zip
+    cd rs-mysql-main
     Status_Check
     Print "Loading Schema..."
     mysql -u root -ppassword <shipping.sql
