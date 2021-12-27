@@ -111,7 +111,7 @@ case $INPUT in
     mv static/* .
     rm -rf rs-frontend-main static README.md
     Print "Setting up Application configuration..."
-    mv template.conf /etc/nginx/nginx.conf
+    mv localhost.conf /etc/nginx/nginx.conf
     export CATALOGUE=catalogue.${DNS_DOMAIN_NAME}
     export CART=cart.${DNS_DOMAIN_NAME}
     export USER=user.${DNS_DOMAIN_NAME}
