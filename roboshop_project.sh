@@ -100,15 +100,16 @@ case $INPUT in
     yum install nginx -y >> output.log
     Status_Check
     Print "Downloading Frontend Application..."
-    curl -s -L -o /tmp/frontend.zip "https://dev.azure.com/DevOps-Batches/ce99914a-0f7d-4c46-9ccc-e4d025115ea9/_apis/git/repositories/db389ddc-b576-4fd9-be14-b373d943d6ee/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
+    curl -s -L -o /tmp/frontend.zip "https://github.com/cicd-project/rs-frontend/archive/main.zip"
     Status_Check
     cd /usr/share/nginx/html
     rm -rf *
     Print "Extracting Frontend Application..."
     unzip -o /tmp/frontend.zip >> output.log
     Status_Check
+    mv rs-frontend-main/* .
     mv static/* .
-    rm -rf static README.md
+    rm -rf rs-frontend-main static README.md
     Print "Setting up Application configuration..."
     mv template.conf /etc/nginx/nginx.conf
     export CATALOGUE=catalogue.${DNS_DOMAIN_NAME}
