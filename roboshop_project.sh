@@ -271,7 +271,7 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
     mvn clean package >> output.log
     Status_Check
     Print "Moving Jar to Project location..."
-    mv target/*dependencies.jar shipping.jar
+    mv target/shipping-1.0.jar shipping.jar
     Status_Check
     chmod roboshop:roboshop /home/roboshop/ -R
     Print "Setting up Application configuration..."
