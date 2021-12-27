@@ -50,11 +50,12 @@ Setup_Nojejs(){
   curl -s -L -o /tmp/$1.zip "$2"
   Status_Check
   Print "Extracting $1 Application..."
-  mkdir -p /home/roboshop/$1
-  cd /home/roboshop/$1
+  #mkdir -p /home/roboshop/$1
+  cd /home/roboshop/
   unzip -o /tmp/$1.zip >> output.log
   Status_Check
-  mv rs-$1-main/* .
+  mv rs-$1-main/* $1
+  cd /home/roboshop/$1
   Print "Installing Nodejs App Dependencies..."
   npm install  >> output.log
   Status_Check
@@ -174,7 +175,7 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
   ;;
 
   user)
-    Setup_Nojejs "user" "https://dev.azure.com/DevOps-Batches/ce99914a-0f7d-4c46-9ccc-e4d025115ea9/_apis/git/repositories/e911c2cd-340f-4dc6-a688-5368e654397c/items?path=%2F&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true"
+    Setup_Nojejs "user" "https://github.com/cicd-project/rs-user/archive/main.zip"
   ;;
 
   redis)
