@@ -33,8 +33,9 @@ Print(){
 }
 
 Create_AppUser(){
-  id roboshop >> output.log
-  if [ $? -ne 0 ]; then
+  if id roboshop &>/dev/null; then
+      Print "Application User roboshop exist"
+  else
       Print "Adding Application user..."
       useradd roboshop
       Status_Check
