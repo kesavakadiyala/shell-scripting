@@ -22,12 +22,12 @@ echo -e "Welcome Viewer \n\t Thanks for Viewing"
 #7 - Inverted
 #8 - Hidden
 
-#31(Test Color), 41(Background Color) - Red
-#32(Test Color), 42(Background Color) - Green
-#33(Test Color), 43(Background Color) - Yellow
-#34(Test Color), 44(Background Color) - Blue
-#35(Test Color), 45(Background Color) - Magenta
-#36(Test Color), 46(Background Color) - Cyan
+#31(Text Color), 41(Background Color) - Red
+#32(Text Color), 42(Background Color) - Green
+#33(Text Color), 43(Background Color) - Yellow
+#34(Text Color), 44(Background Color) - Blue
+#35(Text Color), 45(Background Color) - Magenta
+#36(Text Color), 46(Background Color) - Cyan
 
 echo -e "\e[1mHello World in Bold text\e[0m"
 echo -e "\e[4mHello World in Underlined text\e[0m"
