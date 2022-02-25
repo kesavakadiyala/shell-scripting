@@ -301,7 +301,7 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc' >/etc/yum.repos.d/mong
     wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.19/rabbitmq-server-3.8.19-1.el7.noarch.rpm >> output.log
     Status_Check
     Print "Installing $1..."
-    sudo yum -y install rabbitmq-server*.rpm >> output.log
+        sudo yum -y install rabbitmq-server*.rpm >> output.log
     Status_Check
     Print "Starting $1 server..."
     systemctl enable rabbitmq-server
